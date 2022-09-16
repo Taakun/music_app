@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>音楽診断サイト M-diag (エムディアグ) | あなたにおすすめの音楽を簡単診断</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Elsie+Swash+Caps&family=Fredericka+the+Great&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet">
+    <!-- href="{{ url_for('static', filename='css/style.css') }}" -->
+    <!-- href="css/style.css" -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>M-diag</h1>
+    </header>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2">
+                <p class="top">あなたにおすすめの音楽は・・・</p>
+                <p style="text-align:center">
+                    <img src="{{image}}">
+                </p>
+                <p class="music">
+                    <曲名><br>{{music}}<br>
+                        <アーティスト名><br>{{artist}} です!
+                </p>
+                <p class="below">
+                    {{music}}は<a href="{{url}}" target="_blank" rel="noopener noreferrer">こちら</a>
+                </p>
+
+                {% if audio == 'なし' %}
+                <p>試聴はできません</p>
+                {% else %}
+                <p>試聴は<a href="{{audio}}" target="_blank" rel="noopener noreferrer">こちら</a>からできます</p>
+                {% endif %}
+                <button onclick="location.href='/'" class="btn btn-success">やり直す</button>
+                <button id="btnReload" class="btn btn-info">再読み込み</button><br>
+                <button id="display" class="btn btn-danger">レーダーチャートの表示</button>
+                
+                <div class="chart-container">
+                    <canvas id="myRadarChart"></canvas>
+                    <button id="rank" class="btn btn-warning">ランキングの表示</button>
+                    <canvas id="myRadarRankChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <footer>
+            <p>&copy; たーくん</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js">
+    </script>
+    <script>
+        document.getElementById('display').addEventListener('click', function () {
+            document.getElementById('rank').style.display = 'inline'
+            var ctx = document.getElementById("myRadarChart");
+            var myRadarChart = new Chart(ctx, {
+                //グラフの種類
+                type: 'radar',
+                //データの設定
+                data: {
+                    labels: ['danceability', 'acousticness', 'energy', 'loudness', 'tempo', 'valence'],
+                    datasets: [{
+                        label: '「{{music}}」のレーダーチャート',
+                        //グラフのデータ
+                        data: ['{{values[0]}}', '{{values[1]}}', '{{values[2]}}', '{{values[3]}}', '{{values[4]}}', '{{values[5]}}'],
+                        // データライン
+                        borderColor: 'red',
+                    }],
+                },
+                //オプションの設定
+                options: {
+                    scales: {
+                        r: {
+                            //グラフの最小値・最大値
+                            min: 0,
+                            max: 1,
+                            stepSize: 0.1,
+                            //背景色
+                            backgroundColor: 'snow',
+                            //グリッドライン
+                            grid: {
+                                color: 'pink',
+                            },
+                            //アングルライン
+                            angleLines: {
+                                color: 'green',
+                            },
+                            //各項目のラベル
+                            pointLabels: {
+                                color: 'blue',
+                            },
+                        },
+                    },
+                },
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById('rank').addEventListener('click', function () {
+            var size = {{size|tojson}}
+            var ctx = document.getElementById("myRadarRankChart");
+            var myRadarRankChart = new Chart(ctx, {
+                //グラフの種類
+                type: 'radar',
+                //データの設定
+                data: {
+                    labels: ['danceability', 'acousticness', 'energy', 'loudness', 'tempo', 'valence'],
+                    datasets: [{
+                        label: '「{{music}}」のランキング({{size}}曲中)',
+                        //グラフのデータ
+                        data: ['{{rank[0]}}', '{{rank[1]}}', '{{rank[2]}}', '{{rank[3]}}', '{{rank[4]}}', '{{rank[5]}}'],
+                        // データライン
+                        borderColor: 'red',
+                    }],
+                },
+                //オプションの設定
+                options: {
+                    scales: {
+                        r: {
+                            //グラフの最小値・最大値
+                            min: 1,
+                            max: size,
+                            //背景色
+                            backgroundColor: 'snow',
+                            //グリッドライン
+                            grid: {
+                                color: 'pink',
+                            },
+                            //アングルライン
+                            angleLines: {
+                                color: 'green',
+                            },
+                            //各項目のラベル
+                            pointLabels: {
+                                color: 'blue',
+                            },
+                        },
+                    },
+                },
+            });
+        });
+    </script>
+
+    <script>
+        btnReload.addEventListener('click', function () { location.reload(); });
+    </script>
+
+    <script>
+        document.getElementById('rank').style.display = 'none'
+    </script>
+</body>
+
+</html>

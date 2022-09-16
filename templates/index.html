@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>音楽診断サイト M-diag (エムディアグ) | あなたにおすすめの音楽を簡単診断</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Elsie+Swash+Caps&family=Fredericka+the+Great&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet">
+    <!-- href="{{ url_for('static', filename='css/style.css') }}" -->
+    <!-- href="css/style.css" -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>M-diag</h1>
+    </header>
+    </div>
+
+    <div class="container">
+        <form action="/result" method="POST" autocomplete="off" class="row">
+            <div class="col-sm-8 offset-sm-2">
+                <p class="top">あなたにおすすめの音楽を簡単な質問で即座に診断します。<br></p>
+                <p>始めに音楽のジャンルを選択しましょう。</p>
+                <div class="form-group">
+                    <label for="name">ジャンル</label>
+                    <select id="genre" name="genre" class="form-control" required>
+                        <option value="">選択してください</option>
+                        <option value="1">洋楽</option>
+                        <option value="2">邦楽</option>
+                        <option value="3">ボカロ</option>
+                    </select>
+                </div>
+                <p>次に、以下の質問に回答しましょう。あなた好みの音楽を診断します。</p>
+                <p class="question">＜質　問＞</p>
+                <div class="form-group">
+                    <label class="name"><span class="badge badge-danger">1</span>踊りたくなる音楽が好き?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q1" id="q1_1" value="0" required>
+                        <label for="q1_1" class="form-check-label">そう思う</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q1" id="q1_2" value="1">
+                        <label for="q1_2" class="form-check-label">ややそう思う</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q1" id="q1_3" value="2">
+                        <label for="q1_3" class="form-check-label">普通</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q1" id="q1_4" value="3">
+                        <label for="q1_4" class="form-check-label">あまりそう思わない</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q1" id="q1_5" value="4">
+                        <label for="q1_5" class="form-check-label">そう思わない</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q1" id="q1_6" value="5">
+                        <label for="q1_6" class="form-check-label">特に好みはない</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="name"><span class="badge badge-danger">2</span>アコースティック感はどのくらいが好き?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q2" id="q2_1" value="0" required>
+                        <label for="q2_1" class="form-check-label">強め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q2" id="q2_2" value="1">
+                        <label for="q2_2" class="form-check-label">やや強め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q2" id="q2_3" value="2">
+                        <label for="q2_3" class="form-check-label">普通</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q2" id="q2_4" value="3">
+                        <label for="q2_4" class="form-check-label">やや弱め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q2" id="q2_5" value="4">
+                        <label for="q2_5" class="form-check-label">弱め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q2" id="q2_6" value="5">
+                        <label for="q2_6" class="form-check-label">特に好みはない</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="name"><span class="badge badge-danger">3</span>エネルギッシュさ?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q3" id="q3_1" value="0" required>
+                        <label for="q3_1" class="form-check-label">強め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q3" id="q3_2" value="1">
+                        <label for="q3_2" class="form-check-label">やや強め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q3" id="q3_3" value="2">
+                        <label for="q3_3" class="form-check-label">普通</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q3" id="q3_4" value="3">
+                        <label for="q3_4" class="form-check-label">やや弱め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q3" id="q3_5" value="4">
+                        <label for="q3_5" class="form-check-label">弱め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q3" id="q3_6" value="5">
+                        <label for="q3_6" class="form-check-label">特に好みはない</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="name"><span class="badge badge-danger">4</span>音量・音圧はどのくらいが好き?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q4" id="q4_1" value="0" required>
+                        <label for="q4_1" class="form-check-label">強め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q4" id="q4_2" value="1">
+                        <label for="q4_2" class="form-check-label">やや強め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q4" id="q4_3" value="2">
+                        <label for="q4_3" class="form-check-label">普通</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q4" id="q4_4" value="3">
+                        <label for="q4_4" class="form-check-label">やや弱め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q4" id="q4_5" value="4">
+                        <label for="q4_5" class="form-check-label">弱め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q4" id="q4_6" value="5">
+                        <label for="q4_6" class="form-check-label">特に好みはない</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="name"><span class="badge badge-danger">5</span>テンポはどのくらいが好き?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q5" id="q5_1" value="0" required>
+                        <label for="q5_1" class="form-check-label">速め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q5" id="q5_2" value="1">
+                        <label for="q5_2" class="form-check-label">やや速め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q5" id="q5_3" value="2">
+                        <label for="q5_3" class="form-check-label">普通</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q5" id="q5_4" value="3">
+                        <label for="q5_4" class="form-check-label">やや遅め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q5" id="q5_5" value="4">
+                        <label for="q5_5" class="form-check-label">遅め</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q5" id="q5_6" value="5">
+                        <label for="q5_6" class="form-check-label">特に好みはない</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="name"><span class="badge badge-danger">6</span>悲観的な音楽と楽観的な音楽どちらが好き?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q6" id="q6_1" value="0" required>
+                        <label for="q6_1" class="form-check-label">楽観的</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q6" id="q6_2" value="1">
+                        <label for="q6_2" class="form-check-label">やや楽観的</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q6" id="q6_3" value="2">
+                        <label for="q6_3" class="form-check-label">普通</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q6" id="q6_4" value="3">
+                        <label for="q6_4" class="form-check-label">やや悲観的</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q6" id="q6_5" value="4">
+                        <label for="q6_5" class="form-check-label">悲観的</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="q6" id="q6_6" value="5">
+                        <label for="q6_6" class="form-check-label">どちらでも良い</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">結果を見る</button>
+            </div>
+        </form>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <footer>
+            <p>&copy; たーくん</p>
+        </footer>
+    </div>
+</body>
+
+</html>
