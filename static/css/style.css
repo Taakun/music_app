@@ -82,6 +82,14 @@ img {
     display: inline-block;
 }
 
-#myRadarRankChart{
+#myRadarRankChart {
     margin-left: 200px;
+}
+
+#answer {
+    margin-top: 5px;
+}
+
+table {
+    left: 70px;
 }

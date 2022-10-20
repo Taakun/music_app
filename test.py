@@ -5,6 +5,14 @@ import bisect
 
 app = Flask(__name__)
 
+import os
+from flask import send_from_directory
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 # 楽曲データを保存する関数関数
 def music_data(ans):# 回答を引数とする
     if ans[0]==1:
@@ -74,8 +82,16 @@ def result():
     rec_music_audio=rec_music_data[4]
     rec_music_values=rec_music_data[5]
     rec_music_rank=rec_music_data[6]
-    
-    response = render_template('result.html',music=rec_music_name,artist=rec_music_artist,url=rec_music_url,image=rec_music_image,audio=rec_music_audio,values=rec_music_values,rank=rec_music_rank,size=len(df))
+    Q=[['好き','やや好き','普通','やや嫌い','嫌い','特に好みはない']
+      ,['強め','やや強め','普通','やや弱め','弱め','特に好みはない']
+      ,['強め','やや強め','普通','やや弱め','弱め','特に好みはない']
+      ,['強め','やや強め','普通','やや弱め','弱め','特に好みはない']
+      ,['速め','やや速め','普通','やや遅め','遅め','特に好みはない']
+      ,['楽観的','やや楽観的','普通','やや悲観的','悲観的','どちらでも良い']]
+    answer=[]
+    for i in range(6):
+        answer.append(Q[i][ans[i+1]])
+    response = render_template('result.html',music=rec_music_name,artist=rec_music_artist,url=rec_music_url,image=rec_music_image,audio=rec_music_audio,values=rec_music_values,rank=rec_music_rank,size=len(df),ans=answer)
     return response
 
 if __name__ == '__main__':

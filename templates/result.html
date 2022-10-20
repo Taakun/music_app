@@ -31,7 +31,38 @@
                 </p>
                 <p class="music">
                     <曲名><br>{{music}}<br>
-                        <アーティスト名><br>{{artist}} です!
+                    <アーティスト名><br>{{artist}} です!<br>
+                    <あなたの解答>
+                    <table border="5" bordercolor="red">
+                        <tr>
+                            <th>質問</th>
+                            <th>解答</th>
+                        </tr>
+                        <tr>
+                          <td>1.踊りたくなる音楽</td>
+                          <td>{{ans[0]}}</td>
+                        </tr>
+                        <tr>
+                          <td>2.アコースティック感</td>
+                          <td>{{ans[1]}}</td>
+                        </tr>
+                        <tr>
+                            <td>3.エネルギッシュさ</td>
+                            <td>{{ans[2]}}</td>
+                        </tr>
+                        <tr>
+                            <td>4.音量・音圧</td>
+                            <td>{{ans[3]}}</td>
+                        </tr>
+                        <tr>
+                            <td>5.テンポ</td>
+                            <td>{{ans[4]}}</td>
+                        </tr>
+                        <tr>
+                            <td>6.悲観的な音楽と楽観的な音楽</td>
+                            <td>{{ans[5]}}</td>
+                        </tr>
+                    </table>
                 </p>
                 <p class="below">
                     {{music}}は<a href="{{url}}" target="_blank" rel="noopener noreferrer">こちら</a>
@@ -43,15 +74,22 @@
                 <p>試聴は<a href="{{audio}}" target="_blank" rel="noopener noreferrer">こちら</a>からできます</p>
                 {% endif %}
                 <button onclick="location.href='/'" class="btn btn-success">やり直す</button>
-                <button id="btnReload" class="btn btn-info">再読み込み</button><br>
-                <button id="display" class="btn btn-danger">レーダーチャートの表示</button>
+                <button onclick="window.location.reload();" class="btn btn-secondary">再読み込み</button><br>
                 
-                <div class="chart-container">
-                    <canvas id="myRadarChart"></canvas>
-                    <button id="rank" class="btn btn-warning">ランキングの表示</button>
-                    <canvas id="myRadarRankChart"></canvas>
+                <div class="text-center">
+                    <button id="display" class="btn btn-danger btn-block">レーダーチャートの表示</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="chart-container">
+            <canvas id="myRadarChart"></canvas>
+            <div class="col-sm-9 offset-sm-3">
+                <button id="rank" class="btn btn-warning btn-block">ランキングの表示</button>
+            </div>
+            <canvas id="myRadarRankChart"></canvas>
         </div>
     </div>
 
@@ -114,52 +152,49 @@
 
     <script>
         document.getElementById('rank').addEventListener('click', function () {
-            var size = {{size|tojson}}
-            var ctx = document.getElementById("myRadarRankChart");
-            var myRadarRankChart = new Chart(ctx, {
-                //グラフの種類
-                type: 'radar',
-                //データの設定
-                data: {
-                    labels: ['danceability', 'acousticness', 'energy', 'loudness', 'tempo', 'valence'],
-                    datasets: [{
-                        label: '「{{music}}」のランキング({{size}}曲中)',
-                        //グラフのデータ
-                        data: ['{{rank[0]}}', '{{rank[1]}}', '{{rank[2]}}', '{{rank[3]}}', '{{rank[4]}}', '{{rank[5]}}'],
-                        // データライン
-                        borderColor: 'red',
-                    }],
-                },
-                //オプションの設定
-                options: {
-                    scales: {
-                        r: {
-                            //グラフの最小値・最大値
-                            min: 1,
-                            max: size,
-                            //背景色
-                            backgroundColor: 'snow',
-                            //グリッドライン
-                            grid: {
-                                color: 'pink',
-                            },
-                            //アングルライン
-                            angleLines: {
-                                color: 'green',
-                            },
-                            //各項目のラベル
-                            pointLabels: {
-                                color: 'blue',
-                            },
+            var size = {{ size| tojson
+        }};
+        var ctx = document.getElementById("myRadarRankChart");
+        var myRadarRankChart = new Chart(ctx, {
+            //グラフの種類
+            type: 'radar',
+            //データの設定
+            data: {
+                labels: ['danceability', 'acousticness', 'energy', 'loudness', 'tempo', 'valence'],
+                datasets: [{
+                    label: '「{{music}}」のランキング({{size}}曲中)',
+                    //グラフのデータ
+                    data: ['{{rank[0]}}', '{{rank[1]}}', '{{rank[2]}}', '{{rank[3]}}', '{{rank[4]}}', '{{rank[5]}}'],
+                    // データライン
+                    borderColor: 'red',
+                }],
+            },
+            //オプションの設定
+            options: {
+                scales: {
+                    r: {
+                        //グラフの最小値・最大値
+                        min: 1,
+                        max: size,
+                        //背景色
+                        backgroundColor: 'snow',
+                        //グリッドライン
+                        grid: {
+                            color: 'pink',
+                        },
+                        //アングルライン
+                        angleLines: {
+                            color: 'green',
+                        },
+                        //各項目のラベル
+                        pointLabels: {
+                            color: 'blue',
                         },
                     },
                 },
-            });
+            },
         });
-    </script>
-
-    <script>
-        btnReload.addEventListener('click', function () { location.reload(); });
+        });
     </script>
 
     <script>
