@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link
-        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Elsie+Swash+Caps&family=Fredericka+the+Great&family=Open+Sans:wght@300&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Elsie+Swash+Caps&family=Fredericka+the+Great&family=Open+Svalues:wght@300&display=swap"
         rel="stylesheet">
     <!-- href="{{ url_for('static', filename='css/style.css') }}" -->
     <!-- href="css/style.css" -->
@@ -43,35 +43,35 @@
                 <p>試聴は<a href="{{audio}}" target="_blank" rel="noopener noreferrer">こちら</a>からできます</p>
                 {% endif %}
                 <p class="table">
-                    <あなたの解答>
+                    <この曲の数値>
                         <table border="5" bordercolor="red">
                             <tr>
-                                <th>質問</th>
-                                <th>解答</th>
+                                <th>指標</th>
+                                <th>値(0~1)</th>
                             </tr>
                             <tr>
-                                <td>1.踊りたくなる音楽かどうか</td>
-                                <td>{{ans[0]}}</td>
+                                <td>1.danceability</td>
+                                <td>{{values[0]}}</td>
                             </tr>
                             <tr>
-                                <td>2.アコースティック感</td>
-                                <td>{{ans[1]}}</td>
+                                <td>2.acousticness</td>
+                                <td>{{values[1]}}</td>
                             </tr>
                             <tr>
-                                <td>3.エネルギッシュさ</td>
-                                <td>{{ans[2]}}</td>
+                                <td>3.energy</td>
+                                <td>{{values[2]}}</td>
                             </tr>
                             <tr>
-                                <td>4.音量・音圧</td>
-                                <td>{{ans[3]}}</td>
+                                <td>4.loudness</td>
+                                <td>{{values[3]}}</td>
                             </tr>
                             <tr>
-                                <td>5.テンポ</td>
-                                <td>{{ans[4]}}</td>
+                                <td>5.tempo</td>
+                                <td>{{values[4]}}</td>
                             </tr>
                             <tr>
-                                <td>6.悲観的な音楽と楽観的な音楽</td>
-                                <td>{{ans[5]}}</td>
+                                <td>6.valence</td>
+                                <td>{{values[5]}}</td>
                             </tr>
                         </table>
                 </p>
@@ -232,7 +232,7 @@
                 datasets: [{
                     label: '「{{music}}」のランキング({{size}}曲中)',
                     //グラフのデータ
-                    data: ['{{rank[0]}}', '{{rank[1]}}', '{{rank[2]}}', '{{rank[3]}}', '{{rank[4]}}', '{{rank[5]}}'],
+                    data: ['{{music_rank[0]}}', '{{music_rank[1]}}', '{{music_rank[2]}}', '{{music_rank[3]}}', '{{music_rank[4]}}', '{{music_rank[5]}}'],
                     // データライン
                     borderColor: 'red',
                 }],

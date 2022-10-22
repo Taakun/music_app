@@ -67,6 +67,11 @@ img {
     left: 70px;
 }
 
+.table{
+    clear: left;
+    margin-top: 15px;
+}
+
 #display {
     margin-top: 5px;
 }
@@ -92,4 +97,17 @@ img {
 
 table {
     left: 70px;
+}
+
+.change {
+    margin-left: 450px;
+}
+
+#convert {
+    margin-left: 200px;
+}
+
+#continue {
+    float: left;
+    margin-right: 10px;
 }
